@@ -1,0 +1,19 @@
+name: Push Data to google app script
+
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: 'Push scouting data to appscript'
+        required: true
+        type: string
+
+jobs:
+  call-google-apps-script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Google Apps Script Web App
+      run: |
+        curl -X POST -H "Content-Type: application/json" \
+             -d '{"text": "${{ github.event.inputs.text }}"}' \
+             ${{ secrets.WEB_APP_URL }}
